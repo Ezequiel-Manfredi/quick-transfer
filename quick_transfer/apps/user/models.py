@@ -1,5 +1,7 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
-# Create your models here.
-class User(models.Model):
-  pass
+class User(AbstractUser):
+    dni = models.IntegerField()
+    img_profile = models.ImageField(upload_to='avatars/', null=True, blank=True)
+    is_admin = models.BooleanField(default=False)

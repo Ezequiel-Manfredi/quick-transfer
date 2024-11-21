@@ -10,27 +10,31 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+import environ
+import os
 from pathlib import Path
+from django.urls import reverse_lazy
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+env = environ.Env()
+env_file = os.path.join(os.path.dirname(BASE_DIR), ".env")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-g0ua506n^0-qywnczb%6z5yairpm+&z*+0djht-y(oa&iu-%w%'
+SECRET_KEY_DEFAULT = 'django-insecure-g0ua506n^0-qywnczb%6z5yairpm+&z*+0djht-y(oa&iu-%w%'
+SECRET_KEY = env("SECRET_KEY", default=SECRET_KEY_DEFAULT)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool('DJANGO_DEBUG', default=True)
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=['*'])
 
 # Application definition
-
-INSTALLED_APPS = [
+DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,6 +42,20 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
+LOCAL_APPS = [
+    'apps.user',
+    'apps.account',
+    'apps.transaction',
+    'apps.reason'
+]
+
+INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS
+
+AUTH_USER_MODEL = 'user.User'
+
+LOGIN_URL = reverse_lazy('login')
+LOGIN_REDIRECT_URL = reverse_lazy('account')
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -54,7 +72,7 @@ ROOT_URLCONF = 'quick_transfer.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -115,7 +133,16 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Contenido Media
+RUTA_CARPETA_MEDIA = os.path.join(BASE_DIR, "media")
+MEDIA_URL = "media/"
+MEDIA_ROOT = RUTA_CARPETA_MEDIA
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
