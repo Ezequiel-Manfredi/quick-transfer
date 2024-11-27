@@ -1,0 +1,15 @@
+{% extends "headers.html" %}
+
+{% block content %}
+<div class="flex w-[50vw] h-[100vh] justify-center items-center m-auto ">
+  <form action="" method="post" class="max-w-sm mx-auto flex justify-center items-center gap-5">{% csrf_token %}
+    <a href="{% url "account:home" %}" class="inline-block h-10 py-2.5 px-2.5 text-gray-900  bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+      <svg class=" w-5 h-5 m-auto" fill="#fff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M512 256A256 256 0 1 0 0 256a256 256 0 1 0 512 0zM215 127c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-71 71L392 232c13.3 0 24 10.7 24 24s-10.7 24-24 24l-214.1 0 71 71c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L103 273c-9.4-9.4-9.4-24.6 0-33.9L215 127z"/></svg>
+    </a>
+    <label class="block mb-2 text-xl gap-2 font-medium text-gray-900 dark:text-white">
+      <p class="dark:bg-gray-700 rounded-tl-xl rounded-tr-xl p-1 w-[70%] ">Cargar Saldo</p>
+      <input type="number" name="amount" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-bl-xl rounded-br-xl rounded-tr-xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="{{account.balance}}">
+    </label>
+  </form>
+</div>
+{% endblock  %}
