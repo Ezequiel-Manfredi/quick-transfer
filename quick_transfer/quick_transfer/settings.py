@@ -54,8 +54,8 @@ INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS
 
 AUTH_USER_MODEL = 'user.User'
 
-LOGIN_URL = reverse_lazy('login')
-LOGIN_REDIRECT_URL = reverse_lazy('account')
+LOGIN_URL = reverse_lazy('user:login')
+LOGIN_REDIRECT_URL = reverse_lazy('account:home')
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -81,6 +81,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries': {
+                'filters': 'templatetags.filters'
+            }
         },
     },
 ]
