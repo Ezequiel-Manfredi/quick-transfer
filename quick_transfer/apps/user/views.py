@@ -15,3 +15,7 @@ class NewUser(CreateView):
     def get_context_data(self, **kwargs):
         ctx = super(NewUser, self).get_context_data(**kwargs)
         return ctx
+    
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
